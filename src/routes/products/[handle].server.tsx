@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   useSession,
   useShop,
@@ -9,14 +9,11 @@ import {
   ShopifyAnalyticsConstants,
   gql,
   Image,
-} from '@shopify/hydrogen';
+} from '@shopify/hydrogen'
 
 const QUERY = gql`
-  query product(
-    $country: CountryCode
-    $language: LanguageCode
-    $handle: String!
-  ) @inContext(country: $country, language: $language) {
+  query product($country: CountryCode, $language: LanguageCode, $handle: String!)
+  @inContext(country: $country, language: $language) {
     product: product(handle: $handle) {
       compareAtPriceRange {
         maxVariantPrice {
@@ -130,10 +127,7 @@ const QUERY = gql`
           }
         }
       }
-      meta_lifetime_warranty: metafield(
-        key: "lifetime_warranty"
-        namespace: "my_fields"
-      ) {
+      meta_lifetime_warranty: metafield(key: "lifetime_warranty", namespace: "my_fields") {
         id
         type
         namespace
@@ -212,16 +206,16 @@ const QUERY = gql`
       }
     }
   }
-`;
+`
 
 export default function Product() {
-  const {handle} = useRouteParams();
-  const {countryCode = 'US'} = useSession();
+  const { handle } = useRouteParams()
+  const { countryCode = 'US' } = useSession()
 
-  const {languageCode} = useShop();
+  const { languageCode } = useShop()
 
   const {
-    data: {product},
+    data: { product },
   } = useShopQuery({
     query: QUERY,
     variables: {
@@ -230,7 +224,7 @@ export default function Product() {
       handle,
     },
     preload: true,
-  });
+  })
 
   useServerAnalytics(
     product
@@ -240,11 +234,11 @@ export default function Product() {
             resourceId: product.id,
           },
         }
-      : null,
-  );
+      : null
+  )
 
   if (!product) {
-    return <h1> NOT FOUND!! </h1>;
+    return <h1> NOT FOUND!! </h1>
   }
 
   return (
@@ -252,8 +246,8 @@ export default function Product() {
       {/* <Seo type="product" data={product} /> */}
       <div>
         <h1>{product.title}</h1>
-        <Image data={product.featuredImage} width={300}/>
+        <Image data={product.featuredImage} width={300} />
       </div>
     </div>
-  );
+  )
 }

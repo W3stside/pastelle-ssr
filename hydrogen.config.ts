@@ -1,4 +1,4 @@
-import {defineConfig} from '@shopify/hydrogen/config';
+import { defineConfig } from '@shopify/hydrogen/config'
 
 export default defineConfig({
   shopify: {
@@ -6,4 +6,4 @@ export default defineConfig({
     storefrontToken: import.meta.env.VITE_SHOPIFY_STOREFRONT_API_TOKEN,
     storefrontApiVersion: import.meta.env.VITE_SHOPIFY_API_VERSION,
   },
-});
+})
